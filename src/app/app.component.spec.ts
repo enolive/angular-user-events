@@ -8,10 +8,10 @@ describe('AppComponent', () => {
 
     const button = screen.getByRole('button')
     await userEvent.click(button)
-    // workaround option 3: trigger detectChanges
+    // workaround option 1: trigger detectChanges
     // view.detectChanges()
 
-    // workaround option 1: using fireEvent instead of userEvent fixes the test
+    // workaround option 2: using fireEvent instead of userEvent fixes the test
     // fireEvent.click(button)
 
     // workaround option 3: waitFor fixes the test
