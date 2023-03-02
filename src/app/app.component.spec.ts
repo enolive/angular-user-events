@@ -1,31 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component'
+import {render, screen} from '@testing-library/angular'
+import userEvent from '@testing-library/user-event'
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
+  it('works', async () => {
+    await render(AppComponent)
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    const button = screen.getByRole('button')
+    await userEvent.click(button)
+    // workaround option 1: using fireEvent instead of userEvent fixes the test
+    // fireEvent.click(button)
 
-  it(`should have as title 'angular-user-events'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-user-events');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('angular-user-events app is running!');
-  });
-});
+    // workaround option 2: waitFor fixes the test
+    // await waitFor(() => {
+    expect(screen.getByRole('status')).toHaveTextContent('You pressed the button!')
+    // })
+  })
+})
